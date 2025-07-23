@@ -1,0 +1,53 @@
+本方案核心思路都是使用 Python 的 MoviePy 套件做影片剪輯與合成，
+搭配固定的題目素材夾結構＋通用模板片段，實現「這有對嗎？→不對喔！X 樣式＋Vine Boom 音效→揭示正解」的短影音自動化生成。
+
+
+1. 相依套件
+MoviePy：核心影片編輯（切割、合併、文字、音效）
+Medium
+GitHub
+
+FFmpeg：底層編碼（MoviePy 會自動調用）
+Toolify
+
+Edge TTS（可選）：將文字自動轉成語音（若想全程語音提示）
+Medium
+
+
+
+2. 資料夾結構範例
+bash
+複製
+編輯
+/素材/
+  └─ Q001/
+       ├─ question.txt     # 包含題目文字與四個選項、正解編號
+       ├─ bg.jpg           # 題目背景圖（可無）
+       ├─ vine_boom.mp3    # 錯誤提示音效
+       ├─ correct.mp4      # 正解顯示動畫
+       └─ wrong.mp4        # 錯誤 X 樣式動畫
+
+
+這段程式利用 MoviePy 完成讀檔、文字覆板、音效與動畫串接等動作
+Medium
+
+可批次迴圈遍歷所有題目資料夾，一口氣生成多支短片
+
+在 Canva 編輯好背景圖、錯誤動畫、正解動畫等後，統一匯出到你指定的 Google Drive 資料夾，Colab Notebook 以 Drive 掛載方式讀取。
+
+Canva 素材管理
+
+在 Canva 編輯好背景圖、錯誤動畫、正解動畫等後，統一匯出到你指定的 Google Drive 資料夾，Colab Notebook 以 Drive 掛載方式讀取。
+
+也可用 Canva API 自動匯出，但更簡單的是手動下載整包後放到 /素材/ 結構中即可。
+
+進階擴充建議
+多樣化模板：在程式中隨機選用多個 wrong.mp4 或 correct.mp4 以增加影片多樣性
+DEV Community
+
+文字轉語音：結合 Edge TTS 或其他 TTS，讓「這有對嗎？」與「正確答案是 X」都有語音提示
+Medium
+
+批次併發：若題量龐大，可採用 multiprocessing 或 Celery 進行並行處理。
+
+雲端部署：將 Streamlit App 部署到 Streamlit Cloud 或 Heroku，讓同事／朋友點網址就能用。
